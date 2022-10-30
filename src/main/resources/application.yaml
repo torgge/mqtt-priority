@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: priority-message
+  server:
+    port: 8801
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+    configurations:
+      out:
+        queue: PRIORITY-QUEUE
+        exchange: PRIORITY-EXCHANGE
+        routing-key: PRIORITY-ROUTING-KEY
+        dlq-queue: PRIORITY-DLQ-QUEUE
+        dlq-exchange: PRIORITY-DLQ-EXCHANGE
+        dlq-routing-key: PRIORITY-DLQ-ROUTING-KEY
+        x-max-priority: 3
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 3s
+          max-attempts: 3
+          max-interval: 10s
+          multiplier: 1
+  main:
+    banner-mode: off
